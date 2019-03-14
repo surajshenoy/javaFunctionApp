@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CSHarPmodule Remote Debug (.NET Core)",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "CSHarPmodule",
+          "sh",
+          "-c"
+        ],
+        "debuggerPath": "~/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}",
+        "quoteArgs": true
+      },
+      "sourceFileMap": {
+        "/app": "${workspaceFolder}/modules/CSHarPmodule"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "CSHarPmodule Local Debug (.NET Core)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceRoot}/modules/CSHarPmodule/bin/Debug/netcoreapp2.1/CSHarPmodule.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/modules/CSHarPmodule",
+      "internalConsoleOptions": "openOnSessionStart",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "env": {
+        "EdgeHubConnectionString": "${config:azure-iot-edge.EdgeHubConnectionString}",
+        "EdgeModuleCACertificateFile": "${config:azure-iot-edge.EdgeModuleCACertificateFile}"
+      }
+    }
+  ]
+}
